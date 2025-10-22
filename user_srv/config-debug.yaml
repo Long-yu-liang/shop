@@ -1,0 +1,12 @@
+name: 'user_srv'
+
+mysql:
+  host: '192.168.56.150'
+  port: 3306
+  user: 'root'
+  password: 'root'
+  db: 'shop_user_srv'
+
+consul:
+  host: '192.168.56.150'
+  port: 8500

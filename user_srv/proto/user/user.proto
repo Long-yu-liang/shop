@@ -1,0 +1,68 @@
+//protoc --go_out=. --go-grpc_out=. *.proto
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option go_package = ".;proto";
+
+service User {
+    rpc GetUserList(PageInfo) returns (UserListResponse) {} //用户列表
+    rpc GetUserByMobile(MobileRequest) returns (UserInfoResonse) {} //通过mobile查询用户
+    rpc GetUserById(IdRequest) returns (UserInfoResonse) {} //通过ID查询用户
+    rpc CreateUser(CreateUserInfo) returns (UserInfoResonse) {}//添加用户
+    rpc UpdateUser(UpdateUserInfo) returns (google.protobuf.Empty) {}//更新用户
+    rpc CheckPassword(PasswordCheckInfo) returns (CheckResponse) {}//检查密码
+}
+//GetUserList
+message PageInfo {
+    uint32 pn = 1;
+    uint32 pSize = 2;
+}
+
+message UserInfoResonse {
+    int32 id = 1;
+    string password = 2;
+    string mobile = 3;
+    string nickName = 4;
+    uint64 birthday = 5;
+    string gender = 6;
+    int32 role = 7;
+}
+
+message UserListResponse {
+    int32 total =1; //总数
+    repeated UserInfoResonse data = 2;
+}
+//GetUserByMobile-CreateUser
+message MobileRequest {
+    string mobile = 1;
+}
+
+message IdRequest {
+    int32 id = 1;
+}
+
+message CreateUserInfo {
+    string nickName = 1;
+    string password = 2;
+    string mobile =3;
+}
+
+//UpdateUser
+message UpdateUserInfo {
+    int32 id = 1;
+    string nickName = 2;
+    string gender = 3;
+    uint64 birthday = 4;
+}
+//CheckPassword
+message PasswordCheckInfo {
+    string password = 1; // 原始密码
+    string encryptedPassword = 2;// 加密后的密码
+}
+
+message CheckResponse {
+    bool success = 1;
+}
+
+
+
+
